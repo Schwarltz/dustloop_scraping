@@ -7,13 +7,26 @@ from bs4 import BeautifulSoup
 # Global Variables
 URL = "https://www.dustloop.com/wiki/index.php?title=GGST/Ramlethal_Valentine"
 
+"""
+Removes empty lines from the front and back of the list
+"""
+def stripEnds(l):
+    empties = ['\n', '']
+    for i in range(len(l)):
+        if l[i] not in empties:
+            break
+    
+    for j in reversed(range(len(l))):
+        if l[j] not in empties:
+            break
+
+    return l[i:j+1]
 
 def extractTitle(pair):
     ret = {}
     title =  pair.big.text.strip()
     ret['title'] = title
     return ret
-
 
 def extractImages(description):
     ret = {}
@@ -80,23 +93,16 @@ def extractAtkValues(description):
 def extractNotes(description):
     ret = {}
     # get the notes of the move
-    propData = []
 
+    atkTable = description.find(class_='attack-info')
+
+    # remove table
+    unwanted = atkTable.find('table')
+    unwanted.extract()
     children = description.find(class_='attack-info').findAll(['li', 'dt', 'p'])
-
-    # pprint.pprint(children)
-
-    properties = description.find(class_='attack-info').find_all('li')
-    for prop in properties:
-        propData.append(prop.text.strip())
-    
-    ret['properties'] = propData
-    
-    notes = ''
-    for line in description.find(class_='attack-info').find_all(['p', 'dl']):
-        notes = notes + line.text.strip() + "\n"
-
-    ret['notes'] = notes
+    children = [x.get_text() for x in atkTable]
+    children = stripEnds(children)
+    ret['notes'] = children
     return ret
 
 if __name__=='__main__':
@@ -110,5 +116,6 @@ if __name__=='__main__':
         moveData |= extractTitle(pair)
         moveData |= extractImages(description)
         moveData |= extractAtkValues(description)
+        
         moveData |= extractNotes(description)
         pprint.pprint(moveData)
