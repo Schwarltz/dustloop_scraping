@@ -1,14 +1,7 @@
-import sys
 from bs4 import BeautifulSoup
 import requests
 from pprint import pprint
 from char_moves import getMoves
-
-# AS OF 09/12/2021
-validGGST = ['Anji_Mito', 'Axl_Low', 'Chipp_Zanuff', 'Faust', 'Giovanna', 
-'Goldlewis_Dickinson', 'Happy_Chaos', 'I-No', 'Jack-O', 
-'Ky_Kiske', 'Leo_Whitefang', 'May', 'Millia_Rage', 'Nagoriyuki', 
-'Potemkin', 'Ramlethal_Valentine', 'Sol_Badguy', 'Zato-1']
 
 def extractLoreVoice(loreVoice):
     res = {}
@@ -53,7 +46,7 @@ def extractProCons(procons):
     # pprint(res)
     return res
 
-def getStats(info):
+def extractStats(info):
     res = {}
     stats = info.find_all("td", class_="CharaInfoLabel")
     for stat in stats:
@@ -64,8 +57,7 @@ def getStats(info):
         res[name.get_text()] =  value.get_text()
     # pprint(res)
 
-    return res
-    
+    return res  
 
 def getOverview(soup):
     res = {}
@@ -87,18 +79,6 @@ def getOverview(soup):
     res['name'] = name.get_text()
     bigImg = stats.find("img")
     res['bigImage'] = "https://www.dustloop.com" + bigImg['src']
-    res |= getStats(stats)
+    res |= extractStats(stats)
 
     return res
-
-    
-
-
-if __name__=='__main__':
-
-    URL = "https://www.dustloop.com/wiki/index.php?title=GGST/Nagoriyuki"
-    
-    page = requests.get(URL)
-    soup = BeautifulSoup(page.content, "html.parser")
-    getOverview(soup)
-    # pprint(getMoves(soup))

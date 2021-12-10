@@ -5,7 +5,7 @@ Converts Dustloop's character info into a json format that is exportable into a 
 # Usage
 
 1. Clone the repository into a local file.
-2. Run the command `python scrape.py ([character_name] or [any dustloop character link]` in the src directory of this repository.
+2. Run the command `python scrape.py ([character_name] or [any dustloop character link])` in the src directory of this repository.
 
 The `character_name` can be any GGST strive.
 
