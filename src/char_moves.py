@@ -6,9 +6,6 @@ from bs4 import BeautifulSoup
 
 from helpers import stripEnds
 
-# Global Variables
-URL = "https://www.dustloop.com/wiki/index.php?title=GGST/Anji_Mito"
-
 def extractTitle(pair):
     ret = {}
     title =  pair.big.text.strip()
@@ -96,19 +93,6 @@ def extractNotes(description):
     ret['notes'] = children
     return ret
 
-if __name__=='__main__':
-    page = requests.get(URL)
-    soup = BeautifulSoup(page.content, "html.parser")
-    outer_div = soup.find(id="mw-content-text")
-    for pair in outer_div.find_all(lambda tag: tag.name== "h3"):   
-        description = pair.find_next_sibling('div', class_="attack-container")
-        moveData = {}
-        moveData |= extractTitle(pair)
-        moveData |= extractImages(description)
-        moveData |= extractAtkValues(description)    
-        moveData |= extractNotes(description)
-        pprint.pprint(moveData)
-
 def getMoves(soup):
     moves = []
     
@@ -120,7 +104,5 @@ def getMoves(soup):
         moveData |= extractImages(description)
         moveData |= extractAtkValues(description)    
         moveData |= extractNotes(description)
-        # if moveData['title'] == 'j.A':
-        #     pprint.pprint(moveData)
         moves.append(moveData)
     return moves
