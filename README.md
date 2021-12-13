@@ -51,3 +51,13 @@ e.g. `python scrape.py https://www.dustloop.com/wiki/index.php?title=GGXRD-R2/Di
 - Images and hitboxes
 - Frame Data
 - Notes (formatting preserved under raw_notes)
+
+
+# Examples
+
+Using a character name:
+![May GGST](assets/May_JSON.png?raw=true "May GGST")
+
+
+Using a direct link:
+![Dizzy GGXrd](assets/Dizzy_JSON.png?raw=true "Dizzy GGXrd")
