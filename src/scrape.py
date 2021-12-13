@@ -39,20 +39,27 @@ if __name__=='__main__':
         print("Valid GGST character names:")
         pprint(validGGST)
         exit(1)
-    URL = ""
+    data = ""
     if sys.argv[1] in validGGST:
         character = sys.argv[1]
         print(f"Collecting Data on {character}...")
-        print(overview(character))
+        data = overview(character)
 
     elif sys.argv[1] == "help":
         print("Scrape dustloop characters into JSON format")
         print("Usage: python char_overview ([character name] or [dustloop character URL]")
         print("Valid GGST character names:")
         pprint(validGGST)
-        exit(0)
     else:
         print('Assuming arg as URL')
         URL = sys.argv[1]
-        print(overview(URL))
+        data = overview(URL)
+    
+    print(data)
+    try:
+        f = open("output.json","w")
+        json.dump(data, f)
+        f.close()
+    except Exception as err:
+        print("Write Error: ", err)
     
