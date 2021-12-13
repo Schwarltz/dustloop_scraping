@@ -53,7 +53,11 @@ e.g. `python scrape.py https://www.dustloop.com/wiki/index.php?title=GGXRD-R2/Di
 - Notes (formatting preserved under raw_notes)
 
 
-# Examples
+# Running the server
+
+If you want to run a backend server for some reason, run server.py in the src directory.
+
+## Examples using API calls
 
 Using a character name:
 ![May GGST](assets/May_JSON.png?raw=true "May GGST")
@@ -61,3 +65,5 @@ Using a character name:
 
 Using a direct link:
 ![Dizzy GGXrd](assets/Dizzy_JSON.png?raw=true "Dizzy GGXrd")
+
+Screenshots from Postman
